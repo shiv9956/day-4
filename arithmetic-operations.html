@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arithmetic Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+        }
+
+        .calculator-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            width: 350px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #2d3436;
+        }
+
+        button {
+            margin: 5px;
+            padding: 12px 18px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* Simple highlight effect */
+        button:hover {
+            filter: brightness(1.15);
+        }
+
+        #numbers, #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #dfe6e9;
+            width: 80%;
+            background-color: #f1f2f6;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+            border-radius: 8px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        #results {
+            margin-top: 15px;
+            background-color: #ffeaa7;
+        }
+    </style>
+    <script>
+        let num1 = null;
+        let num2 = null;
+
+        function updateDisplay() {
+            document.getElementById("numbers").innerHTML = `
+                <strong>First Number:</strong> ${num1 !== null ? num1 : 'Not set'}<br>
+                <strong>Second Number:</strong> ${num2 !== null ? num2 : 'Not set'}
+            `;
+        }
+
+        function setFirstNumber() {
+            let input = prompt("Enter the first number:");
+            if (!isNaN(input) && input.trim() !== "") {
+                num1 = parseFloat(input);
+                updateDisplay();
+            } else {
+                alert("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        function setSecondNumber() {
+            let input = prompt("Enter the second number:");
+            if (!isNaN(input) && input.trim() !== "") {
+                num2 = parseFloat(input);
+                updateDisplay();
+            } else {
+                alert("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        function calculate(operation) {
+            if (num1 === null || num2 === null) {
+                alert("Please set both numbers first.");
+                return;
+            }
+
+            let result;
+            switch (operation) {
+                case "add":
+                    result = num1 + num2;
+                    break;
+                case "subtract":
+                    result = num1 - num2;
+                    break;
+                case "multiply":
+                    result = num1 * num2;
+                    break;
+                case "divide":
+                    result = (num2 !== 0) ? (num1 / num2).toFixed(2) : "Cannot divide by zero";
+                    break;
+                default:
+                    result = "Invalid operation";
+            }
+
+            document.getElementById("results").innerHTML = `
+                <strong>Operation:</strong> ${operation}<br>
+                <strong>Result:</strong> ${result}
+            `;
+        }
+    </script>
+</head>
+<body>
+
+    <div class="calculator-container">
+        <h2>Arithmetic Operations</h2>
+
+        <button onclick="setFirstNumber()">Set First Number</button>
+        <button onclick="setSecondNumber()">Set Second Number</button>
+
+        <div id="numbers">
+            <strong>First Number:</strong> Not set<br>
+            <strong>Second Number:</strong> Not set
+        </div>
+
+        <br>
+
+        <button onclick="calculate('add')">Add</button>
+        <button onclick="calculate('subtract')">Subtract</button>
+        <button onclick="calculate('multiply')">Multiply</button>
+        <button onclick="calculate('divide')">Divide</button>
+
+        <div id="results"></div>
+    </div>
+
+</body>
+</html>
